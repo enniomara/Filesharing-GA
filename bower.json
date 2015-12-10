@@ -1,0 +1,8 @@
+{
+  "name": "filesharing",
+  "version": "0.1.0",
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.6"
+  }
+}

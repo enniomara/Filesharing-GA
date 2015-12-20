@@ -1,0 +1,38 @@
+# JWT-authentication
+
+### GET - params
+
+  **Header - Main**
+
+    'x-access-token': 'token-goes-here'
+
+  **Query**
+
+    'token': 'token-goes-here'
+
+---
+
+
+
+### POST - params
+
+  From-Data - Main
+
+    'token': 'token-goes-here'
+
+  Header
+
+    'x-access-token': 'token-goes-here'
+
+---
+
+# UserModel
+
+### Usage
+  1. `exports.DBModel`
+
+    This exports the whole model that is used to interact with the database(e.g. DBModel.findOne())
+
+  2. `exports.verifyPassword`
+
+    This exports the function that verifies the password against the database. Returns an error object(if available) and a true|false variable. 

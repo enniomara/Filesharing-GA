@@ -10,7 +10,8 @@ module.exports = function(app, router){
   router.route('/users')
     .post(userController.registerUser({
       username: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      registrationIP: req.ip
     }, function(error, data){
       if(err){
         req.status(500);

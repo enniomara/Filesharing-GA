@@ -7,7 +7,8 @@ exports.registerUser = function(jsonObject, callback) {
 
   var user = new DBModel({
     username: jsonObject.username,
-    password: jsonObject.password
+    password: jsonObject.password,
+    registrationIP: UserModel.ipToBuffer(jsonObject.registrationIP)
   });
 
   user.save(function(err) {

@@ -1,16 +1,46 @@
 // Load required packages
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
+var ip = require('ip');
+
 
 // Define our user schema
 var UserSchema = new mongoose.Schema({
   username: {
     type: String,
     unique: true,
+    required: true
   },
   password: {
     type: String,
-  }
+  },
+  registrationDate: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
+  lastOnline: {
+    type: Date
+  },
+  registrationIP: {
+    type: Buffer,
+    required: true
+  },
+  lastIP: {
+    type: Buffer
+  },
+  files: [
+    {
+      fileName: {
+        type: String
+      },
+      uploadDate: {
+        type: Date,
+        required: true,
+        default: Date.now
+      }
+    }
+  ]
 });
 
 // Execute before each user.save() call
@@ -38,6 +68,13 @@ exports.verifyPassword = function(providedPassword, dbPassword, cb) {
     cb(null, isMatch);
   });
 };
+
+exports.ipToBuffer = function(IP, callback){
+  // TODO - do a check to see if IP is valid
+
+  return ip.toBuffer(IP);
+
+}
 
 // Export the Mongoose model
 exports.DBModel = mongoose.model('users', UserSchema);

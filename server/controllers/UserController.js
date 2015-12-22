@@ -3,23 +3,22 @@ var UserModel = require('../models/UserModel');
 var DBModel = UserModel.DBModel;
 
 // Create endpoint /api/users for POST
-exports.postUsers = function(req, res) {
+exports.registerUser = function(jsonObject, callback) {
+
   var user = new DBModel({
-    username: req.body.username,
-    password: req.body.password
+    username: jsonObject.username,
+    password: jsonObject.password
   });
-  console.log(req.body);
 
   user.save(function(err) {
     // TODO - Run check if there is a current user that exist with that username
     if (err){
-      res.send(err);
+      callback(error, null)
     }
     else{
-        res.json({ message: 'New user has been added.' });
+      var reponse = { message: 'New user has been added.' };
+      callback(null, response)
     }
-
-
   });
 };
 
@@ -34,4 +33,8 @@ exports.getUsers = function(req, res) {
     }
 
   });
+};
+
+exports.deleteUser = function(){
+
 };

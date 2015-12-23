@@ -8,22 +8,62 @@ module.exports = function(app, router){
   // =============================================================================
 
   router.route('/users')
-    .post(userController.registerUser({
+    .post(function(req, res){
+        userController.registerUser({
+          username: req.body.username,
+          password: req.body.password,
+          registrationIP: req.ip
+          },
+        function(error, data){
+          if(err){
+            req.status(500);
+            res.send({message: "Something went wrong"});
+          }
+          else{
+            res.send()
+          }
+        })
+      })
+    .get(function(req, res, next){
+      // check header or url parameters or post parameters for token
+      var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+      jwtAuthController.isAuthenticated(token, next, function(err, data){
+        if(err){
+          res.json(data);
+        }
+        else if (err && data.message == "No token provided") {
+          res.status(403).send(data);
+        }
+        else{
+          req.decoded = data;
+          next();
+        }
+      })
+    }, userController.getUsers);
+
+  router.route('/authenticate').post(function(req, res){
+    jwtAuthController.authenticate({
       username: req.body.username,
-      password: req.body.password,
-      registrationIP: req.ip
-    }, function(error, data){
-      if(err){
-        req.status(500);
-        res.send({message: "Something went wrong"});
+      password: req.body.password
+    },
+    function(error, data){
+      if(error){
+        if(data){
+          res.json(data);
+          return;
+        }
+        req.json({
+          success: false,
+          message: "Something went wrong. Check console for more information."
+        });
       }
       else{
-        res.send()
+        res.json(data);
       }
-    }))
-    .get(jwtAuthController.isAuthenticated, userController.getUsers);
+    });
+  });
 
-  router.route('/authenticate').post(jwtAuthController.authenticate);
   router.route('/test').post(function(req, res) {
     res.send({
       message: "it works",

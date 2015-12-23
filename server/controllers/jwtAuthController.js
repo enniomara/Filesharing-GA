@@ -4,60 +4,60 @@ var DBModel = UserModel.DBModel;
 var configDB = require('../db/config.js');
 
 
-exports.authenticate = function(req, res, callback){
-  var pUsername = req.body.username;
-  var pPassword = req.body.password;
+exports.authenticate = function(jsonObject, callback){
+  var pUsername = jsonObject.username;
+  var pPassword = jsonObject.password;
   // find the user
   DBModel.findOne({
     // TODO - run a check for username/check for sql/noSQL injection
     username: pUsername
   }, function(err, user) {
 
-    if (err) throw err;
+    if (err) callback(err, null);
 
     if (!user) {
-      res.json(
-        {
-
-
-          success: false,
-          message: 'Authentication failed. User not found.'
-        }
-      );
+      var response = {
+        success: false,
+        message: 'Authentication failed. User not found.'
+      };
+      callback(null, response);
     }
     else if (user) {
 
       // check if password matches
       UserModel.verifyPassword(pPassword, user.password, function(error, isMatch){
-        if (err) {
-          res.json({
+        if (error) {
+          var response = {
             success: false,
-            message: "Password verifying went wrong"
-          })
+            message: "Password verifying went wrong. See console for more information."
+          };
+          callback(error, response);
+          return;
         }
         // Password did not match
         if (!isMatch) {
-          res.json(
-            {
-              success: false,
-              message: 'Authentication failed. Wrong password.'
-            }
-          );
+          var response = {
+            success: false,
+            message: 'Authentication failed. Wrong password.'
+          };
+          callback(null, response);
+          return;
         }
 
         // if user is found and password is right
         // create a token
         var token = jwt.sign({username: user.username}, configDB.secret, {
-          expiresInMinutes: 1440 // expires in 24 hours
+          expiresIn: 86400 // expires in 24 hours
         });
 
         // return the information including token as JSON
-        res.json({
+        var response = {
           success: true,
           message: 'Enjoy your token!',
           token: token
-        });
-      })
+        };
+        callback(null, response);
+      });
 
 
     }
@@ -65,9 +65,8 @@ exports.authenticate = function(req, res, callback){
   });
 }
 
-exports.isAuthenticated = function(req, res, next) {
-  // check header or url parameters or post parameters for token
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+exports.isAuthenticated = function(token, next, callback) {
+
 
   // decode token
   if (token) {
@@ -75,15 +74,15 @@ exports.isAuthenticated = function(req, res, next) {
     // verifies secret and checks exp
     jwt.verify(token, configDB.secret, function(err, decoded) {
       if (err) {
-        return res.json({
+        var response = {
           success: false,
           message: 'Failed to authenticate token.'
-        });
+        }
+        return callback(err, response);
       }
       else {
         // if everything is good, save to request for use in other routes
-        req.decoded = decoded;
-        next();
+        return callback(null, decoded);
       }
     });
 
@@ -91,10 +90,10 @@ exports.isAuthenticated = function(req, res, next) {
   else {
     // if there is no token
     // return an error
-    return res.status(403).send({
+    var response = {
         success: false,
         message: 'No token provided.'
-    });
-
+    }
+    callback(true, response);
   }
 }

@@ -14,11 +14,11 @@ exports.registerUser = function(jsonObject, callback) {
   user.save(function(err) {
     // TODO - Run check if there is a current user that exist with that username
     if (err){
-      callback(error, null)
+      callback(err, null);
     }
     else{
-      var reponse = { message: 'New user has been added.' };
-      callback(null, response)
+      var response = { message: 'New user has been added.' };
+      callback(null, response);
     }
   });
 };
@@ -36,6 +36,8 @@ exports.getUsers = function(req, res) {
   });
 };
 
+
+// TODO - code this
 exports.deleteUser = function(){
 
 };

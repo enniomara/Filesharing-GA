@@ -2,14 +2,10 @@ var expect = require('chai').expect;
 var UserController = require("../controllers/UserController");
 var UserModel = require('../models/UserModel').DBModel;
 var mongoose = require('mongoose');
-var config = require('../db/config');
+var config = require('./testConfig');
 mongoose.connect(config.testUrl);
 
-var testUserInfo = {
-  username: "test",
-  password: "testPassword",
-  registrationIP: "127.0.0.1"
-};
+var testUserInfo = config.testUserInfo;
 var userInfo = null;
 
 

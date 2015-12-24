@@ -65,7 +65,7 @@ exports.authenticate = function(jsonObject, callback){
   });
 }
 
-exports.isAuthenticated = function(token, next, callback) {
+exports.isAuthenticated = function(token, callback) {
 
 
   // decode token

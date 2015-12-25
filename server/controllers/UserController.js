@@ -24,13 +24,21 @@ exports.registerUser = function(jsonObject, callback) {
 };
 
 // Create endpoint /api/users for GET
-exports.getUsers = function(req, res) {
-  DBModel.find(function(err, users) {
+exports.getUserInfo = function(jsonObject, callback) {
+  // Exclude sensitive information
+  var fields = "-password -registrationIP"
+  // TODO - check for injection possibilities
+  DBModel.findOne({
+    username: jsonObject.username
+  }, fields, function(err, users) {
     if (err){
-      res.send(err);
+      callback(err, null);
     }
     else{
-      res.json(users);
+      callback(null, {
+        success: true,
+        user: users
+      })
     }
 
   });

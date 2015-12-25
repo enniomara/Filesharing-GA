@@ -15,8 +15,9 @@ module.exports = function(app, router){
           registrationIP: req.ip
           },
         function(error, data){
-          if(err){
-            req.status(500);
+          // TODO - add user information already there
+          if(error){
+            res.status(500);
             res.send({message: "Something went wrong"});
           }
           else{
@@ -28,7 +29,7 @@ module.exports = function(app, router){
       // check header or url parameters or post parameters for token
       var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
-      jwtAuthController.isAuthenticated(token, next, function(err, data){
+      jwtAuthController.isAuthenticated(token, function(err, data){
         if(err){
           res.json(data);
         }
@@ -40,7 +41,23 @@ module.exports = function(app, router){
           next();
         }
       })
-    }, userController.getUsers);
+    },
+    function(req, res){
+      var jsonObject = {
+        username: req.decoded.username
+      }
+      userController.getUserInfo(jsonObject, function(error, data){
+        if(error){
+          res.json({
+            success: false,
+            message: "Something went wrong when getting user. Please check console for information. "
+          });
+        }
+        else{
+          res.json(data);
+        }
+      });
+    });
 
   router.route('/authenticate').post(function(req, res){
     jwtAuthController.authenticate({

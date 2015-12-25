@@ -34,6 +34,12 @@ exports.getUserInfo = function(jsonObject, callback) {
     if (err){
       callback(err, null);
     }
+    else if(!users){
+      callback(null, {
+        success:false,
+        message: "No user was found with the selected criteria"
+      });
+    }
     else{
       callback(null, {
         success: true,

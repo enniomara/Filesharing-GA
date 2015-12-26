@@ -2,6 +2,8 @@ module.exports = function(app, router){
   var userController = require('./controllers/UserController');
   var jwtAuthController = require('./controllers/jwtAuthController');
 
+  var multer = require('multer');
+  var upload = multer({dest: './uploads/tmp'});
 
 
   // ROUTES FOR OUR API
@@ -81,10 +83,12 @@ module.exports = function(app, router){
     });
   });
 
-  router.route('/test').post(function(req, res) {
+  router.route('/test').post(upload.array('uploadFiles'), function(req, res) {
+    console.log(req.files)
     res.send({
       message: "it works",
-      ip: req.ip
+      ip: req.ip,
+      files: req.files
     })
   });
 

@@ -31,9 +31,13 @@ var UserSchema = new mongoose.Schema({
   },
   files: [
     {
-      fileName: {
+      virtualFileName: {
         type: String
       },
+      realFileName: {
+        type: String,
+        required: true
+      }
       uploadDate: {
         type: Date,
         required: true,

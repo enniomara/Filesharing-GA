@@ -12,6 +12,8 @@ var jwtAuthController = require('../controllers/jwtAuthController');
 var userInfo = null;
 var tempToken = "test";
 
+
+
 describe("Jwt Authentication - functions", function() {
   // Always called when testing db
   dropDatabase();
@@ -19,15 +21,13 @@ describe("Jwt Authentication - functions", function() {
 
   // create testuser to test functions
   before(function(done){
-
     UserController.registerUser(testUserInfo, function(error, data){
+      if(error) throw error;
       done();
     });
   });
-  // Remove user after everything
-  after(function(done){
-    UserModel.remove({username: "test"}, done);
-  });
+
+
 
   describe("jwtAuthController.authenticate", function(){
     it("Authenticates the user and sends back a token", function() {
@@ -56,14 +56,18 @@ describe("Jwt Authentication - functions", function() {
     });
 
   });
+
+
   describe("jwtAuthController.isAuthenticated", function(){
     before(function(done){
       jwtAuthController.authenticate(testUserInfo, function(error, data){
+        if(error) throw error;
         tempToken = data.token;
         done();
       });
-    })
+    });
     it("Ensures isAuthenticated is working properly. Uses different tokens", function(){
+
       // Correct token
       jwtAuthController.isAuthenticated(tempToken, function(err, response){
         expect(err).to.equal(null);

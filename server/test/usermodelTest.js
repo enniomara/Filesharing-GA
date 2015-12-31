@@ -7,21 +7,17 @@ var dropDatabase = require('./DBSetup');
 
 
 var testUserInfo = config.testUserInfo;
-var userInfoBefore = null;
+
 
 describe("UserModel", function(){
   // Always called when testing db
   dropDatabase();
 
-  // create testuser to test functions
+
+  // create testuser to test functions and check if there is a database
   before(function(done){
-
     UserController.registerUser(testUserInfo, function(error, data){
-      if(!error){
-
-        UserModel.findOne({username: "test"}, function(err, pUser){
-
-          userInfo = pUser;
+      if(error) throw error;
       done();
     });
   });
@@ -32,12 +28,12 @@ describe("UserModel", function(){
   });
 
 
+
   describe("UserModel.registerUser", function(){
     var userInfo = null;
-
     before(function(done){
       UserModel.findOne({username: "test"}, function(err, pUser){
-        userInfo = userInfoBefore = pUser;
+        userInfo = pUser;
         done();
       });
     })
@@ -54,17 +50,18 @@ describe("UserModel", function(){
   describe("UserModel.getUserInfo", function(){
     var userInfo = null;
     before(function(done){
+      console.log("userinfo");
       UserController.getUserInfo({username: "test"}, function(error, response){
-        if(!error){
-          userInfo = response;
-          done();
-        }
+        if(error) throw error;
+        userInfo = response;
+
+        done();
       });
     });
 
     it("Ensures no sensitive information is printed out", function(){
-      expect(userInfo.user.password).to.be.an('undefined');
-      expect(userInfo.user.registrationIP).to.be.an('undefined');
+      expect(userInfo.user.password).to.be.a('undefined');
+      expect(userInfo.user.registrationIP).to.be.a('undefined');
     });
     it("Ensures some useful information is printed out and no error is found", function(){
       expect(userInfo).to.be.an('object');

@@ -4,5 +4,9 @@ module.exports = {
       username: "test",
       password: "testPassword",
       registrationIP: "127.0.0.1"
+    },
+    'testFileInfo': {
+      content: "Testfile ",
+      numberOfFiles: 3
     }
 };

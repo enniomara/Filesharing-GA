@@ -1,6 +1,7 @@
 module.exports = function(app, router){
   var userController = require('./controllers/UserController');
   var jwtAuthController = require('./controllers/jwtAuthController');
+  var fileController = require('./controllers/FileController');
 
   var multer = require('multer');
   var upload = multer({dest: './uploads/tmp'});
@@ -84,12 +85,20 @@ module.exports = function(app, router){
   });
 
   router.route('/test').post(upload.array('uploadFiles'), function(req, res) {
-    console.log(req.files)
+    // console.log(req.files)
+    // TODO - run a check if there are multiple files
+    // TODO - Remove the file from temp
+    fileController.createFile(req.files[0], {_id: "567d3dda8f76663e1c603c8e", username: "ennio@g"}, function(err, data){
+      if(err){
+        console.log(err);
+      }
+    });
     res.send({
       message: "it works",
       ip: req.ip,
       files: req.files
-    })
+    });
+
   });
 
   router.get('/members/info', function(req, res){

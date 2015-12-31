@@ -29,22 +29,9 @@ var UserSchema = new mongoose.Schema({
   lastIP: {
     type: Buffer
   },
-  files: [
-    {
-      virtualFileName: {
-        type: String
-      },
-      realFileName: {
-        type: String,
-        required: true
-      }
-      uploadDate: {
-        type: Date,
-        required: true,
-        default: Date.now
-      }
-    }
-  ]
+  files: {
+    // TODO - link to 'files' collection via objectID
+  }
 });
 
 // Execute before each user.save() call

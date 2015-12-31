@@ -1,12 +1,14 @@
 var expect = require('chai').expect;
 var config = require('./testConfig');
-
+var dropDatabase = require('./DBSetup')
 
 
 describe("File upload/retrieval", function(){
   // When sending a file, have the server return a success/failed on whether the file has been saved successfuly. Then let the frontend notify the user on the file status.
 
   describe(".postFile", function(){
+    // Always called when testing db
+  	dropDatabase();
     // No file provided
 
     // Wrong userInfo provided

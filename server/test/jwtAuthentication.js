@@ -2,6 +2,8 @@ var expect = require('chai').expect;
 var config = require('./testConfig');
 var UserController = require("../controllers/UserController");
 var UserModel = require('../models/UserModel').DBModel;
+var dropDatabase = require('./DBSetup')
+
 
 var testUserInfo = config.testUserInfo;
 
@@ -11,6 +13,10 @@ var userInfo = null;
 var tempToken = "test";
 
 describe("Jwt Authentication - functions", function() {
+  // Always called when testing db
+  dropDatabase();
+
+
   // create testuser to test functions
   before(function(done){
 

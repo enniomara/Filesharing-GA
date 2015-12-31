@@ -1,14 +1,17 @@
 var expect = require('chai').expect;
 var UserController = require("../controllers/UserController");
 var UserModel = require('../models/UserModel').DBModel;
-var mongoose = require('mongoose');
 var config = require('./testConfig');
-mongoose.connect(config.testUrl);
+var dropDatabase = require('./DBSetup');
+
+
 
 var testUserInfo = config.testUserInfo;
 var userInfoBefore = null;
 
 describe("UserModel", function(){
+  // Always called when testing db
+  dropDatabase();
 
   // create testuser to test functions
   before(function(done){

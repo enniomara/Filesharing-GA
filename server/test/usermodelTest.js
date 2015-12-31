@@ -22,12 +22,6 @@ describe("UserModel", function(){
     });
   });
 
-  // Remove user after everything
-  after(function(done){
-    UserModel.remove({_id: userInfoBefore._id}, done);
-  });
-
-
 
   describe("UserModel.registerUser", function(){
     var userInfo = null;

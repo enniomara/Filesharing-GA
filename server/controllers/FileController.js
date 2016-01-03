@@ -15,6 +15,7 @@ var config = require('../db/config');
 // File is a req.file[0] object
 // File saving method: "uuid.v1()" + "user._id"
 // userInfo is an array with objectID and username, retrieved from the token
+// TODO - remove file when everything is saved
 exports.createFile = function(file, userInfo, callback){
   var toSaveFiles = [];
 

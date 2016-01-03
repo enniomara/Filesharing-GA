@@ -131,8 +131,45 @@ module.exports = function(app, router){
           res.send(data.file);
         }
       })
-    });
-    
+    // Create the file
+    .put(function(req, res, next) {
+        // check header or url parameters or post parameters for token
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+        jwtAuthController.isAuthenticated(token, function(err, data) {
+          if (err) {
+            res.json(data);
+          } else if (err && data.message == 'No token provided') {
+            res.status(403).send(data);
+          } else {
+            req.decoded = data;
+            next();
+          }
+        });
+      },
+      upload.array('uploadFiles'),
+      function(req, res) {
+        fileController.createFile(req.files[0], {
+            username: req.decoded.username,
+            _id: req.decoded.id
+          },
+          function(err, data) {
+            if (err) {
+              console.log(err);
+              res.json({
+                success: false,
+                message: 'Could not create file. Check console for error message.'
+              });
+              return;
+            }
+            res.json({
+              success: true,
+              message: 'The file has been successfully saved.'
+            });
+            return;
+          });
+      }
+    );
   router.get('/members/info', function(req, res){
     res.json({message: "Not finished. Members/info"})
   })

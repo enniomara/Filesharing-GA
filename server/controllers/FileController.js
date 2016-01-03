@@ -1,10 +1,12 @@
 'use strict';
 var DBModel = require('../models/UserModel').DBModel;
-var FileModelDB = require('../models/FileModel').FileModelDB;
+var FileModel = require('../models/FileModel');
+var FileModelDB = FileModel.FileModelDB;
 var UserController = require('../controllers/UserController')
 var fs = require('fs');
 var path = require('path');
 var uuid = require('node-uuid');
+var typeOf = require('typeof');
 var config = require('../db/config');
 
 // Have ability to post multiple data. Then have postFile split them into array and perform the upload one by one
@@ -23,6 +25,11 @@ exports.createFile = function(file, userInfo, callback){
     }
   })
 
+  // File should be one file(object with info), not an array of files
+  if(typeOf(file) != 'object'){
+    callback({error: true, message: file}, null);
+    return;
+  }
 
   var fileData = {};
   // Read the file from temp path(inside req.file)

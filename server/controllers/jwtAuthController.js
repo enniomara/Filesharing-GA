@@ -1,3 +1,4 @@
+'use strict';
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify
 var UserModel = require('../models/UserModel');
 var DBModel = UserModel.DBModel;

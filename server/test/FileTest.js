@@ -1,3 +1,4 @@
+'use strict';
 var expect = require('chai').expect;
 var UserController = require("../controllers/UserController");
 var UserModel = require('../models/UserModel').DBModel;

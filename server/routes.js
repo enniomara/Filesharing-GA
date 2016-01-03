@@ -1,3 +1,4 @@
+'use strict';
 module.exports = function(app, router){
   var userController = require('./controllers/UserController');
   var jwtAuthController = require('./controllers/jwtAuthController');

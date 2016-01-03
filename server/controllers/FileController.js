@@ -1,3 +1,4 @@
+'use strict';
 var DBModel = require('../models/UserModel').DBModel;
 var FileModelDB = require('../models/FileModel').FileModelDB;
 var UserController = require('../controllers/UserController')

@@ -1,3 +1,4 @@
+'use strict';
 // Load required packages
 var UserModel = require('../models/UserModel');
 var DBModel = UserModel.DBModel;

@@ -35,4 +35,12 @@
 
   2. `exports.verifyPassword`
 
-    This exports the function that verifies the password against the database. Returns an error object(if available) and a true|false variable. 
+    This exports the function that verifies the password against the database. Returns an error object(if available) and a true|false variable.
+
+---
+
+# File
+
+### GET
+#### Usage:
+* This route requires the file's `_id` and the user's authentication token. The token may be submitted through query, form and headers. 

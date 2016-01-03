@@ -76,10 +76,44 @@ exports.createFile = function(file, userInfo, callback){
 
 // Fileinfo consists of user's _id and the file's _id
 // Then the real path is retrieved from the storage and returned here
-exports.retrieveFile = function(fileInfo, callback){
-  
-}
+// callback => (error, data)
+exports.retrieveFile = function(fileInfo, callback) {
 
+  // Get the requested file's information and retrieve it from the filesystem
+  exports.getFileInfo(fileInfo.fileID, fileInfo.userID, function(error, response) {
+    if (error) {
+      callback(error, {
+        message: "Something went wrong when getting the file's data",
+        error: error
+      });
+      return;
+    }
+
+    if (response.success !== true) {
+      callback(true, {
+        message: "No files were found."
+      });
+      return;
+    }
+
+    // If all passes,retrieve the file
+    fs.readFile(path.join(config.uploadFilesFolder, response.file.realFileName), function(err, data) {
+      if (err) {
+        callback(err, {
+          message: "There was an error when reading the file."
+        });
+        return;
+      }
+
+      callback(null, {
+        success: true,
+        fileName: response.file.virtualFileName,
+        file: data
+      });
+
+    });
+  });
+};
 // Queries the database and replaces the "virtual" fileName with newName
 // Fileinfo consists of user's _id and the file's _id
 exports.renameFile = function(fileInfo, newName, callback){
@@ -91,4 +125,38 @@ exports.renameFile = function(fileInfo, newName, callback){
 // The file's path is retrieved from the database
 exports.deleteFile = function(fileInfo, callback){
 
+}
+
+
+
+// TODO - write test for this
+// Gets a file's fields based on the file_id. The user_id is there for security purposes(it disallows if the user_id is not found on the file)
+exports.getFileInfo = function(file_id, user_id, callback){
+  if(typeof file_id !== 'string' || typeof user_id !== 'string'){
+    callback(true, null);
+  }
+  // Use "-fieldName" to exclude unwanted/sensitive fields
+  var fields = "";
+  // TODO - check for injection
+  FileModelDB.findOne({
+    _id: file_id,
+    userID: user_id
+  }, fields, function(err, files){
+    if(err){
+      callback(err, null);
+    }
+    else if(!files){
+      callback(null, {
+        success: false,
+        message: "No files were found with the selected criteria."
+      });
+    }
+    else{
+      // All good
+      callback(null, {
+        success: true,
+        file: files
+      });
+    }
+  });
 }

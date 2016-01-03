@@ -47,7 +47,7 @@ exports.authenticate = function(jsonObject, callback){
 
         // if user is found and password is right
         // create a token
-        var token = jwt.sign({username: user.username}, configDB.secret, {
+        var token = jwt.sign({username: user.username, id: user._id}, configDB.secret, {
           expiresIn: 86400 // expires in 24 hours
         });
 

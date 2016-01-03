@@ -5,6 +5,7 @@ var UserController = require('../controllers/UserController')
 var fs = require('fs');
 var path = require('path');
 var uuid = require('node-uuid');
+var config = require('../db/config');
 
 // Have ability to post multiple data. Then have postFile split them into array and perform the upload one by one
 
@@ -13,7 +14,6 @@ var uuid = require('node-uuid');
 // File saving method: "uuid.v1()" + "user._id"
 // userInfo is an array with objectID and username, retrieved from the token
 exports.createFile = function(file, userInfo, callback){
-  var storagePath = path.join(__dirname, "../uploads/");
   var toSaveFiles = [];
 
   // Check if there is a user with the provided info
@@ -26,11 +26,11 @@ exports.createFile = function(file, userInfo, callback){
 
   var fileData = {};
   // Read the file from temp path(inside req.file)
-  fs.readFile(storagePath + "tmp/" + file.filename, function(err, data){
+  fs.readFile(config.uploadFilesFolder + "tmp/" + file.filename, function(err, data){
     var newFileName = uuid.v1() + userInfo._id;
 
     if(!err){
-      fs.writeFile(storagePath + newFileName, data, function(error){
+      fs.writeFile(config.uploadFilesFolder + newFileName, data, function(error){
         if(!error){
           fileData.userID = userInfo._id;
           fileData.virtualFileName = file.originalname;

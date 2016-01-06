@@ -78,6 +78,7 @@ exports.createFile = function(file, userInfo, callback){
 // Fileinfo consists of user's _id and the file's _id
 // Then the real path is retrieved from the storage and returned here
 // callback => (error, data)
+// TODO - make a function that reads a file
 exports.retrieveFile = function(fileInfo, callback) {
   // TODO- validate type of  fileInfo
   // Get the requested file's information and retrieve it from the filesystem
@@ -157,9 +158,56 @@ exports.renameFile = function(fileInfo, newName, callback){
 // Fileinfo consists of user's _id and the file's _id
 // This function first deletes the file, then the document from the database
 // The file's path is retrieved from the database
+// TODO - make  a function that removes the file from the filesystem
 exports.deleteFile = function(fileInfo, callback){
+  exports.getFileInfo(fileInfo.fileID, fileInfo.userID, function(error, response){
+    if (error) {
+      callback(error, {
+        message: 'Something went wrong when getting the file\'s data'
+      });
+      return;
+    }
 
-}
+    if (response.success !== true) {
+      callback(true, {
+        message: 'No files were found.'
+      });
+      return;
+    }
+
+    // If everything is fine proceed with removing file from DB and filesystem
+    exports.removeUploadedFileFromFilesystem(response.file.realFileName, function(err){
+      if(err){
+        callback(err, {
+          message: 'Something went wrong when deleting file'
+        });
+        return;
+      }
+
+      // File removal from filesystem was successful. Remove file from DB
+      FileModelDB.remove(
+        {
+          _id: response.file._id,
+          userID: response.file.userID
+        },
+        function(error){
+          // TODO - resave the file to filesystem if this fails
+          if(error){
+            callback(this.error, {
+              success: false,
+              message: 'Could not remove file from database'
+            });
+          }
+          callback(null, {
+            success: true,
+            message: 'File has been successfully removed'
+          });
+        }
+      );
+
+    });
+  });
+};
 
 
 
@@ -193,4 +241,31 @@ exports.getFileInfo = function(file_id, user_id, callback){
       });
     }
   });
-}
+};
+
+// Uses unlink to removes an uploaded file from the filesystem
+exports.removeUploadedFileFromFilesystem = function(filePath, callback){
+  if(!filePath){
+    callback(true, {
+      success: false,
+      message: 'No filePath provided'
+    });
+  }
+
+  // Using path.join is dangerous
+  // E.g. if filePath equals '../test/DBSetup' then the DBSetup file in the previous directory will be removed
+  fs.unlink(config.uploadFilesFolder + filePath, function(err){
+    // If everything is fine proceed with removing file from DB and filesystem
+    if(err){
+      callback(err, {
+        success: false
+      });
+      return;
+    }
+    else {
+      callback(null, {
+        success: true
+      });
+    }
+  });
+};

@@ -204,7 +204,47 @@ module.exports = function(app, router){
             return;
           });
       }
+    )
+    .delete(function(req, res, next) {
+        // check header or url parameters or post parameters for token
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+        jwtAuthController.isAuthenticated(token, function(err, data) {
+          if (err) {
+            res.json(data);
+          } else if (err && data.message == 'No token provided') {
+            res.status(403).send(data);
+          } else {
+            req.decoded = data;
+            next();
+          }
+        });
+      },
+      function(req, res){
+        var fileID = req.body.fileID;
+        var userID = req.decoded.id;
+
+        fileController.deleteFile(
+          {
+            fileID: fileID,
+            userID: userID
+          },
+          function(error, response){
+            if(error){
+              res.json({
+                success: false,
+                message: response.message
+              });
+            }
+            res.json({
+              success: true,
+              message: response.message
+            });
+          }
+        );
+      }
     );
+
   router.get('/members/info', function(req, res){
     res.json({message: "Not finished. Members/info"})
   })

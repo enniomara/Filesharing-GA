@@ -1,5 +1,4 @@
 'use strict';
-var DBModel = require('../models/UserModel').DBModel;
 var FileModel = require('../models/FileModel');
 var FileModelDB = FileModel.FileModelDB;
 var UserController = require('../controllers/UserController');
@@ -17,10 +16,10 @@ var config = require('../db/config');
 // userInfo is an array with objectID and username, retrieved from the token
 // TODO - remove file when everything is saved
 exports.createFile = function(file, userInfo, callback){
-  var toSaveFiles = [];
 
   // Check if there is a user with the provided info
-  var DBUserInfo = UserController.getUserInfo({username: userInfo.username}, function(error, user){
+  // If not, throw error
+  UserController.getUserInfo({username: userInfo.username}, function(error, user){
     if(!user){
       callback(true, null);
     }
@@ -142,7 +141,7 @@ exports.renameFile = function(fileInfo, newName, callback){
       $set: {
         virtualFileName: newName
       }
-    }, function(error, raw){
+    }, function(error){
       if(error) {
         callback(error, null);
         return;

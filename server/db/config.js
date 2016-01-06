@@ -7,5 +7,5 @@ module.exports = {
     'testUrl': 'mongodb://localhost:27017/filesharing_test',
     'secret' : 'Super Secret Session Key',
 
-    'uploadFilesFolder': path.join(__dirname, "../uploads/")
+    'uploadFilesFolder': path.join(__dirname, '../uploads/')
 };

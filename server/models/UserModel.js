@@ -13,7 +13,7 @@ var UserSchema = new mongoose.Schema({
     required: true
   },
   password: {
-    type: String,
+    type: String
   },
   registrationDate: {
     type: Date,
@@ -62,12 +62,12 @@ exports.verifyPassword = function(providedPassword, dbPassword, cb) {
   });
 };
 
-exports.ipToBuffer = function(IP, callback){
+exports.ipToBuffer = function(IP){
   // TODO - do a check to see if IP is valid
 
   return ip.toBuffer(IP);
 
-}
+};
 
 // Export the Mongoose model
 exports.DBModel = mongoose.model('users', UserSchema);

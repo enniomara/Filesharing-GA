@@ -2,7 +2,7 @@
 var DBModel = require('../models/UserModel').DBModel;
 var FileModel = require('../models/FileModel');
 var FileModelDB = FileModel.FileModelDB;
-var UserController = require('../controllers/UserController')
+var UserController = require('../controllers/UserController');
 var fs = require('fs');
 var path = require('path');
 var uuid = require('node-uuid');
@@ -24,7 +24,7 @@ exports.createFile = function(file, userInfo, callback){
     if(!user){
       callback(true, null);
     }
-  })
+  });
 
   // File should be one file(object with info), not an array of files
   if(typeOf(file) != 'object'){
@@ -34,7 +34,7 @@ exports.createFile = function(file, userInfo, callback){
 
   var fileData = {};
   // Read the file from temp path(inside req.file)
-  fs.readFile(config.uploadFilesFolder + "tmp/" + file.filename, function(err, data){
+  fs.readFile(config.uploadFilesFolder + 'tmp/' + file.filename, function(err, data){
     var newFileName = uuid.v1() + userInfo._id;
 
     if(!err){
@@ -49,8 +49,8 @@ exports.createFile = function(file, userInfo, callback){
             if(!err){
               callback(null, {
                 success: true,
-                message: "Successfully saved the file."
-              })
+                message: 'Successfully saved the file.'
+              });
             }
             else{
               callback(err, null);
@@ -85,7 +85,7 @@ exports.retrieveFile = function(fileInfo, callback) {
   exports.getFileInfo(fileInfo.fileID, fileInfo.userID, function(error, response) {
     if (error) {
       callback(error, {
-        message: "Something went wrong when getting the file's data",
+        message: 'Something went wrong when getting the file\'s data',
         error: error
       });
       return;
@@ -93,7 +93,7 @@ exports.retrieveFile = function(fileInfo, callback) {
 
     if (response.success !== true) {
       callback(true, {
-        message: "No files were found."
+        message: 'No files were found.'
       });
       return;
     }
@@ -102,7 +102,7 @@ exports.retrieveFile = function(fileInfo, callback) {
     fs.readFile(path.join(config.uploadFilesFolder, response.file.realFileName), function(err, data) {
       if (err) {
         callback(err, {
-          message: "There was an error when reading the file."
+          message: 'There was an error when reading the file.'
         });
         return;
       }
@@ -147,7 +147,6 @@ exports.renameFile = function(fileInfo, newName, callback){
         callback(error, null);
         return;
       }
-      console.log(raw);
       callback(null, {
         success: true,
         message: 'The file has been successfully renamed'
@@ -218,7 +217,7 @@ exports.getFileInfo = function(file_id, user_id, callback){
     callback(true, null);
   }
   // Use "-fieldName" to exclude unwanted/sensitive fields
-  var fields = "";
+  var fields = '';
   // TODO - check for injection
   FileModelDB.findOne({
     _id: file_id,
@@ -230,7 +229,7 @@ exports.getFileInfo = function(file_id, user_id, callback){
     else if(!files){
       callback(null, {
         success: false,
-        message: "No files were found with the selected criteria."
+        message: 'No files were found with the selected criteria.'
       });
     }
     else{

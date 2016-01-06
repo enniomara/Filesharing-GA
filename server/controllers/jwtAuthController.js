@@ -28,20 +28,18 @@ exports.authenticate = function(jsonObject, callback){
       // check if password matches
       UserModel.verifyPassword(pPassword, user.password, function(error, isMatch){
         if (error) {
-          var response = {
+          callback(error, {
             success: false,
-            message: "Password verifying went wrong. See console for more information."
-          };
-          callback(error, response);
+            message: 'Password verifying went wrong. See console for more information.'
+          });
           return;
         }
         // Password did not match
         if (!isMatch) {
-          var response = {
+          callback(null, {
             success: false,
             message: 'Authentication failed. Wrong password.'
-          };
-          callback(null, response);
+          });
           return;
         }
 
@@ -64,8 +62,9 @@ exports.authenticate = function(jsonObject, callback){
     }
 
   });
-}
+};
 
+// TODO - Check error cases
 exports.isAuthenticated = function(token, callback) {
 
 
@@ -78,7 +77,7 @@ exports.isAuthenticated = function(token, callback) {
         var response = {
           success: false,
           message: 'Failed to authenticate token.'
-        }
+        };
         return callback(err, response);
       }
       else {
@@ -91,10 +90,9 @@ exports.isAuthenticated = function(token, callback) {
   else {
     // if there is no token
     // return an error
-    var response = {
+    callback(true, {
         success: false,
         message: 'No token provided.'
-    }
-    callback(true, response);
+    });
   }
-}
+};

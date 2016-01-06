@@ -22,12 +22,15 @@ module.exports = function(app, router){
           // TODO - add user information already there
           if(error){
             res.status(500);
-            res.send({message: "Something went wrong"});
+            res.send({
+              message: 'Something went wrong'
+            });
           }
+          // TODO - handle the else case
           else{
-            res.send()
+            res.send();
           }
-        })
+        });
       })
     .get(function(req, res, next){
       // check header or url parameters or post parameters for token
@@ -37,24 +40,24 @@ module.exports = function(app, router){
         if(err){
           res.json(data);
         }
-        else if (err && data.message == "No token provided") {
+        else if (err && data.message == 'No token provided') {
           res.status(403).send(data);
         }
         else{
           req.decoded = data;
           next();
         }
-      })
+      });
     },
     function(req, res){
       var jsonObject = {
         username: req.decoded.username
-      }
+      };
       userController.getUserInfo(jsonObject, function(error, data){
         if(error){
           res.json({
             success: false,
-            message: "Something went wrong when getting user. Please check console for information. "
+            message: 'Something went wrong when getting user. Please check console for information.'
           });
         }
         else{
@@ -76,7 +79,7 @@ module.exports = function(app, router){
         }
         req.json({
           success: false,
-          message: "Something went wrong. Check console for more information."
+          message: 'Something went wrong. Check console for more information.'
         });
       }
       else{
@@ -128,13 +131,12 @@ module.exports = function(app, router){
           userID: req.decoded.id
         }, newName, function(error, response){
           if(error){
-            console.log(error);
             res.json('Something went wrong while renaming file. Check the console for more info.');
             return;
           }
 
           res.json(response);
-        })
+        });
       }
     )
     // Retrieve the file
@@ -190,7 +192,6 @@ module.exports = function(app, router){
           },
           function(err, data) {
             if (err) {
-              console.log(err);
               res.json({
                 success: false,
                 message: 'Could not create file. Check console for error message.'
@@ -261,4 +262,4 @@ module.exports = function(app, router){
 
 
 
-}
+};

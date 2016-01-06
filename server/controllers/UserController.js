@@ -18,8 +18,9 @@ exports.registerUser = function(jsonObject, callback) {
       callback(err, null);
     }
     else{
-      var response = { message: 'New user has been added.' };
-      callback(null, response);
+      callback(null, {
+        message: 'New user has been added.'
+      });
     }
   });
 };
@@ -27,7 +28,7 @@ exports.registerUser = function(jsonObject, callback) {
 // Create endpoint /api/users for GET
 exports.getUserInfo = function(jsonObject, callback) {
   // Exclude sensitive information
-  var fields = "-password -registrationIP"
+  var fields = '-password -registrationIP';
   // TODO - check for injection possibilities
   DBModel.findOne({
     username: jsonObject.username
@@ -38,14 +39,14 @@ exports.getUserInfo = function(jsonObject, callback) {
     else if(!users){
       callback(null, {
         success:false,
-        message: "No user was found with the selected criteria"
+        message: 'No user was found with the selected criteria'
       });
     }
     else{
       callback(null, {
         success: true,
         user: users
-      })
+      });
     }
 
   });

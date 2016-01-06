@@ -103,6 +103,41 @@ module.exports = function(app, router){
   });
 
   router.route('/files')
+    // Rename the file
+    .post(function(req, res, next) {
+        // check header or url parameters or post parameters for token
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+        jwtAuthController.isAuthenticated(token, function(err, data) {
+          if (err) {
+            res.json(data);
+          } else if (err && data.message == 'No token provided') {
+            res.status(403).send(data);
+          } else {
+            req.decoded = data;
+            next();
+          }
+        });
+      },
+      function(req, res) {
+        var fileID = req.body.fileID;
+        var newName = req.body.newName;
+
+        fileController.renameFile({
+          fileID: fileID,
+          userID: req.decoded.id
+        }, newName, function(error, response){
+          if(error){
+            console.log(error);
+            res.json('Something went wrong while renaming file. Check the console for more info.');
+            return;
+          }
+
+          res.json(response);
+        })
+      }
+    )
+    // Retrieve the file
     .get(function(req, res, next){
       // check header or url parameters or post parameters for token
       var token = req.body.token || req.query.token || req.headers['x-access-token'];

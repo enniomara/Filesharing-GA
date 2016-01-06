@@ -79,7 +79,7 @@ exports.createFile = function(file, userInfo, callback){
 // Then the real path is retrieved from the storage and returned here
 // callback => (error, data)
 exports.retrieveFile = function(fileInfo, callback) {
-
+  // TODO- validate type of  fileInfo
   // Get the requested file's information and retrieve it from the filesystem
   exports.getFileInfo(fileInfo.fileID, fileInfo.userID, function(error, response) {
     if (error) {
@@ -118,8 +118,41 @@ exports.retrieveFile = function(fileInfo, callback) {
 // Queries the database and replaces the "virtual" fileName with newName
 // Fileinfo consists of user's _id and the file's _id
 exports.renameFile = function(fileInfo, newName, callback){
+  if(!fileInfo.fileID || !fileInfo.userID){
+    callback(null, {
+      success: false,
+      message: 'Make sure to add a fileID and/or userID'
+    });
+    return;
+  }
+  if(!newName || newName === '' || typeOf(newName) !== 'string'){
+    callback(null, {
+      success: false,
+      message: 'Make sure to add a valid new name for the file. '
+    });
+  }
 
-};
+  FileModelDB.update(
+    {
+      _id: fileInfo.fileID,
+      userID: fileInfo.userID
+    },
+    {
+      $set: {
+        virtualFileName: newName
+      }
+    }, function(error, raw){
+      if(error) {
+        callback(error, null);
+        return;
+      }
+      console.log(raw);
+      callback(null, {
+        success: true,
+        message: 'The file has been successfully renamed'
+      });
+    });
+  };
 
 // Fileinfo consists of user's _id and the file's _id
 // This function first deletes the file, then the document from the database

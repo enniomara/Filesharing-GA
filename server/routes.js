@@ -138,34 +138,34 @@ module.exports = function(app, router){
       }
     )
     // Retrieve the file
-    .get(function(req, res, next){
-      // check header or url parameters or post parameters for token
-      var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    .get(function(req, res, next) {
+        // check header or url parameters or post parameters for token
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
-      jwtAuthController.isAuthenticated(token, function(err, data){
-        if(err){
-          res.json(data);
-        }
-        else if (err && data.message == "No token provided") {
-          res.status(403).send(data);
-        }
-        else{
-          req.decoded = data;
-          next();
-        }
-      })
-    },
-    function(req, res){
-      var fileId = req.query.fileId;
-      fileController.retrieveFile({
-        fileID: fileId,
-        userID: req.decoded.id
-      }, function(error, data) {
-        if(data.success === true){
-          res.setHeader('Content-disposition', 'attachment; filename=' + data.fileName);
-          res.send(data.file);
-        }
-      })
+        jwtAuthController.isAuthenticated(token, function(err, data) {
+          if (err) {
+            res.json(data);
+          } else if (err && data.message == 'No token provided') {
+            res.status(403).send(data);
+          } else {
+            req.decoded = data;
+            next();
+          }
+        });
+      },
+      function(req, res) {
+        var fileId = req.query.fileId;
+        fileController.retrieveFile({
+          fileID: fileId,
+          userID: req.decoded.id
+        }, function(error, data) {
+          if (data.success === true) {
+            res.setHeader('Content-disposition', 'attachment; filename=' + data.fileName);
+            res.send(data.file);
+          }
+        });
+      }
+    )
     // Create the file
     .put(function(req, res, next) {
         // check header or url parameters or post parameters for token

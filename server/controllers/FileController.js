@@ -14,7 +14,6 @@ var config = require('../db/config');
 // File is a req.file[0] object
 // File saving method: "uuid.v1()" + "user._id"
 // userInfo is an array with objectID and username, retrieved from the token
-// TODO - remove file when everything is saved
 exports.createFile = function(file, userInfo, callback){
 
   // Check if there is a user with the provided info
@@ -77,7 +76,6 @@ exports.createFile = function(file, userInfo, callback){
 // Fileinfo consists of user's _id and the file's _id
 // Then the real path is retrieved from the storage and returned here
 // callback => (error, data)
-// TODO - make a function that reads a file
 exports.retrieveFile = function(fileInfo, callback) {
   // TODO- validate type of  fileInfo
   // Get the requested file's information and retrieve it from the filesystem
@@ -156,7 +154,6 @@ exports.renameFile = function(fileInfo, newName, callback){
 // Fileinfo consists of user's _id and the file's _id
 // This function first deletes the file, then the document from the database
 // The file's path is retrieved from the database
-// TODO - make  a function that removes the file from the filesystem
 exports.deleteFile = function(fileInfo, callback){
   exports.getFileInfo(fileInfo.fileID, fileInfo.userID, function(error, response){
     if (error) {

@@ -5,7 +5,12 @@ module.exports = function(app, router){
   var fileController = require('./controllers/FileController');
 
   var multer = require('multer');
+  var autoReap  = require('multer-autoreap');
+  // Remove the file regardless of error
+  autoReap.options.reapOnError = false;
   var upload = multer({dest: './uploads/tmp'});
+  app.use(autoReap);
+
 
 
   // ROUTES FOR OUR API

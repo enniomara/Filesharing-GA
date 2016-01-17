@@ -29,9 +29,6 @@ var UserSchema = new mongoose.Schema({
   },
   lastIP: {
     type: Buffer
-  },
-  files: {
-    // TODO - link to 'files' collection via objectID
   }
 });
 
@@ -43,7 +40,6 @@ UserSchema.pre('save', function(callback) {
   if (!user.isModified('password')) return callback();
 
   // Password changed so we need to hash it
-  // TODO - Add a salt to the password
   bcrypt.genSalt(5, function(err, salt) {
     if (err) return callback(err);
 

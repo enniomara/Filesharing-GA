@@ -28,7 +28,8 @@ module.exports = function(app, router){
           if(error){
             res.status(500);
             res.send({
-              message: 'Something went wrong'
+              success: false,
+              message: data.message
             });
           }
           // TODO - handle the else case

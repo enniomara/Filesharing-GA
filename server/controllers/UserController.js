@@ -6,6 +6,20 @@ var DBModel = UserModel.DBModel;
 // Create endpoint /api/users for POST
 exports.registerUser = function(jsonObject, callback) {
 
+  exports.getUserInfo({
+    username: jsonObject.username
+  }, function(error, user){
+    // If no user is returned then throw error
+    if(!user){
+      callback(true,
+        {
+          message: 'The username you used is taken. Please try again'
+        }
+      );
+    }
+  });
+
+
   var user = new DBModel({
     username: jsonObject.username,
     password: jsonObject.password,
@@ -13,9 +27,10 @@ exports.registerUser = function(jsonObject, callback) {
   });
 
   user.save(function(err) {
-    // TODO - Run check if there is a current user that exist with that username
     if (err){
-      callback(err, null);
+      callback(err, {
+        message: 'Something went wrong while saving user. Registration was not successful.'
+      });
     }
     else{
       callback(null, {

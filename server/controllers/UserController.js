@@ -19,6 +19,14 @@ exports.registerUser = function(jsonObject, callback) {
     }
   });
 
+  var ip = UserModel.ipToBuffer(jsonObject.registrationIP);
+  // ipToBuffer returns false when IP is neither IPv4 nor IPv6
+  if(ip === false){
+    callback(true, {
+      message: 'Could not validate IP.'
+    });
+  }
+
 
   var user = new DBModel({
     username: jsonObject.username,

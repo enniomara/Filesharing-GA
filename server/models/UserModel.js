@@ -63,7 +63,10 @@ exports.verifyPassword = function(providedPassword, dbPassword, cb) {
 };
 
 exports.ipToBuffer = function(IP){
-  // TODO - do a check to see if IP is valid
+  // An IP is either IPv4 or IPv6
+  if(ip.isV4Format(IP) === false || ip.isV6Format(IP) === false){
+    return false;
+  }
 
   return ip.toBuffer(IP);
 

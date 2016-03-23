@@ -1,6 +1,4 @@
 import React from 'react';
-import TodoStore from '../stores/TodoStore';
-import ActionCreator from '../actions/TodoActionCreators';
 import App from './App.jsx';
 import Navbar from './Navbar.jsx'
 import Home from './Home.jsx';

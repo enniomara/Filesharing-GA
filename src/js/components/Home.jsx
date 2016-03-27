@@ -31,7 +31,7 @@ export default React.createClass({
         <div className='alert alert-info'>
           Hello from Home Component
         </div>
-        <FileList userInfo={this.getUserInfo()}/>
+        <FileList fileList={this.getFileList()}/>
 
       </div>
 

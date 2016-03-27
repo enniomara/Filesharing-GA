@@ -2,6 +2,9 @@
 // Load required packages
 var UserModel = require('../models/UserModel');
 var DBModel = UserModel.DBModel;
+var FileModel = require('../models/FileModel');
+var FileModelDB = FileModel.FileModelDB;
+var FileController = require('../controllers/FileController');
 
 // Create endpoint /api/users for POST
 exports.registerUser = function(jsonObject, callback) {
@@ -73,6 +76,36 @@ exports.getUserInfo = function(jsonObject, callback) {
     }
 
   });
+};
+
+// Endpoint for /api/users/filelist
+exports.getFileList = function(jsonObject, callback) {
+  // Exclude sensitive information
+  var fields = '_id userID virtualFileName uploadDate';
+  FileModelDB.find(
+    {
+      userID: jsonObject.id
+    },
+    fields, function(err, files){
+      if (err){
+        callback(err, null);
+      }
+      else if(!files){
+        callback(null, {
+          success:false,
+          message: 'No files were found'
+        });
+      }
+      else{
+        callback(null, {
+          success: true,
+          files: files
+        });
+      }
+
+
+    }
+  );
 };
 
 

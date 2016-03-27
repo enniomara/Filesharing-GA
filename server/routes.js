@@ -252,6 +252,43 @@ module.exports = function(app, router){
       }
     );
 
+  router.route('/users/filelist')
+    .get(function(req, res, next){
+      // check header or url parameters or post parameters for token
+      var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+      jwtAuthController.isAuthenticated(token, function(err, data) {
+        if (err) {
+          res.json(data);
+        } else if (err && data.message == 'No token provided') {
+          res.status(403).send(data);
+        } else {
+          req.decoded = data;
+          next();
+        }
+      });
+    },
+    function(req, res){
+      var jsonObject = {
+        id: req.decoded.id
+      };
+
+      userController.getFileList(jsonObject, function(err, data){
+        if(err){
+          res.json({
+            success: false,
+            message: 'Something went wrong when getting filelist. Please check console for information.'
+          });
+        }
+        else{
+          res.json(data);
+        }
+
+      });
+    }
+  );
+
+
   router.get('/members/info', function(req, res){
     res.json({message: "Not finished. Members/info"})
   })

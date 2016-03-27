@@ -21,6 +21,17 @@ app.use(bodyParser.json());
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(morgan('dev')); // log every request to the console
 
+// Add headers
+app.use(function (req, res, next) {
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,x-access-token');
+
+    // Pass to next layer of middleware
+    next();
+});
 
 
 var router = express.Router();              // get an instance of the express Router

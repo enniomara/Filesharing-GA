@@ -27,7 +27,7 @@ module.exports = function(app, router){
           // TODO - add user information already there
           if(error){
             res.status(500);
-            res.send({
+            res.end();
               success: false,
               message: data.message
             });
@@ -72,6 +72,7 @@ module.exports = function(app, router){
       });
     });
 
+  // Run an authentication and return a token
   router.route('/authenticate').post(function(req, res){
     jwtAuthController.authenticate({
       username: req.body.username,
@@ -129,7 +130,7 @@ module.exports = function(app, router){
         });
       },
       function(req, res) {
-        var fileID = req.body.fileID;
+        var fileID = req.body.fileId;
         var newName = req.body.newName;
 
         fileController.renameFile({
@@ -228,7 +229,7 @@ module.exports = function(app, router){
         });
       },
       function(req, res){
-        var fileID = req.body.fileID;
+        var fileID = req.body.fileId;
         var userID = req.decoded.id;
 
         fileController.deleteFile(
@@ -242,11 +243,13 @@ module.exports = function(app, router){
                 success: false,
                 message: response.message
               });
+              return;
             }
             res.json({
               success: true,
               message: response.message
             });
+            return;
           }
         );
       }

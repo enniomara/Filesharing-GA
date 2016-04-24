@@ -192,6 +192,7 @@ exports.deleteFile = function(fileInfo, callback){
               success: false,
               message: 'Could not remove file from database'
             });
+            return;
           }
           callback(null, {
             success: true,
@@ -245,6 +246,7 @@ exports.removeUploadedFileFromFilesystem = function(filePath, callback){
       success: false,
       message: 'No filePath provided'
     });
+    return;
   }
 
   // Using path.join is dangerous

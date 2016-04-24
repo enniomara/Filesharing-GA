@@ -1,46 +1,40 @@
-# JWT-authentication
-
-### GET - params
-
-  **Header - Main**
-
-    'x-access-token': 'token-goes-here'
-
-  **Query**
-
-    'token': 'token-goes-here'
-
----
+Running server
+To run the server run `node server.js`. Then a server instance will be running at localhost:3232
 
 
+API
+The API consists of three parts, a user part where users can login/create a new profile, an authentication path where authentication happens and a fileupload path where files can be uploaded/downloaded.
 
-### POST - params
+User part:
+  path: /api/users
+    HTTP verb: POST
+    Params: username, password
+    Description: Creates a user. The username param should contain the user's username and the password param should contain the user's password.
 
-  From-Data - Main
+    HTTP verb: GET
+    Params: token, x-access-token(used as header)
+    Description: This checks if the token provided can be used to authenticate. The token can be added to the request by adding it as a parameter or as a header.
 
-    'token': 'token-goes-here'
+Authentication Part
+  path: /api/authenticate
+    HTTP verb: POST
+    Params: username, password
+    Description: This endpoint authenticates a user. It takes a `username` and `password` as parameters and if authentication is successful, it returns a token that is used in the other endpoints.
 
-  Header
+File part
+  path: /api/files
+    HTTP verb: GET
+    Params: token, x-access-token(used as header), fileId
+    Description: This endpoint downloads a file specified by the fileId parameter. The token can be entered as a parameter or as a header.
 
-    'x-access-token': 'token-goes-here'
+    HTTP verb: POST
+    Params: token, x-access-token(used as header), fileId, newName
+    Description: This endpoint renames the file specified by the `fileId`. The POST request takes the `fileId` for the file and the new name of the file as `newName`. The token can be entered as a parameter or as a header.
 
----
+    HTTP verb: PUT
+    Params: token, x-access-token(used as header), uploadFiles
+    Description: This endpoint adds a file to the server. The file can be uploaded by adding it to the form-data with key `uploadFiles`. Multiple files can be added at the same time. The token can be entered as a parameter or as a header.
 
-# UserModel
-
-### Usage
-  1. `exports.DBModel`
-
-    This exports the whole model that is used to interact with the database(e.g. DBModel.findOne())
-
-  2. `exports.verifyPassword`
-
-    This exports the function that verifies the password against the database. Returns an error object(if available) and a true|false variable.
-
----
-
-# File
-
-### GET
-#### Usage:
-* This route requires the file's `_id` and the user's authentication token. The token may be submitted through query, form and headers. 
+    HTTP verb: DELETE
+    Params: token, x-access-token(used as header), fileId
+    Description: This endpoint deletes a file from the server. The file to be deleted is marked by it's id, send as `fileId`. The token can be entered as a parameter or as a header.

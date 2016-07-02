@@ -1,281 +1,257 @@
 {
-	"id": "f369821a-4623-d8d5-7cd1-03759c9d3a69",
-	"name": "Filesharing API",
-	"description": "",
-	"order": [
-		"52745ac2-220b-bbb2-5bd9-00e1fff36ca7",
-		"d8e503ae-6470-c923-1aab-6ed084b6e8b0",
-		"e4ea7a65-7460-62ec-296c-6f9f7bb75157",
-		"05996322-e626-6399-e10f-e9d8c8ba5c41",
-		"bd1fe6c8-0df7-c9a0-6697-965a52e565c3",
-		"1aa9df7b-b02f-cbad-02ce-c08d4b5b7813",
-		"38ed5b1d-241f-1863-967a-0b21f794dca7",
-		"fb9d405c-14c1-c2a3-39bf-3f9e99c78f02",
-		"d855e1cd-f531-a18c-359c-46474e7846ea"
-	],
-	"folders": [],
-	"timestamp": 1450370873721,
-	"owner": 0,
-	"remoteLink": "",
-	"public": false,
-	"requests": [
+	"variables": [],
+	"info": {
+		"name": "Filesharing API",
+		"_postman_id": "c54fe006-ab95-31dd-bf89-2fc6c0ac04c7",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "05996322-e626-6399-e10f-e9d8c8ba5c41",
-			"headers": "",
-			"url": "localhost:3232/api/authenticate",
-			"pathVariables": {},
-			"preRequestScript": "",
-			"method": "POST",
-			"collectionId": "f369821a-4623-d8d5-7cd1-03759c9d3a69",
-			"data": [
-				{
-					"key": "username",
-					"value": "ennio@g",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "password",
-					"value": "ennio",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"dataMode": "urlencoded",
-			"name": "Authentication - Request token",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1451046937537,
-			"version": 2,
-			"responses": [],
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {}
-		},
-		{
-			"id": "1aa9df7b-b02f-cbad-02ce-c08d4b5b7813",
-			"headers": "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImVubmlvQGciLCJpZCI6IjU2N2QzZGRhOGY3NjY2M2UxYzYwM2M4ZSIsImlhdCI6MTQ2MTUyMTE2NiwiZXhwIjoxNDYxNjA3NTY2fQ.0Q7KxD1h5nK4_J5OxPTyNiM-naoIDKIcSu2jZ4kZnfA\n",
-			"url": "localhost:3232/api/files?fileId=56f2dd514824b4021066c0c2",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "GET",
-			"data": [],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1461521606873,
-			"name": "Files - Get file",
-			"description": "Gets the file based on user_id and file_id",
-			"collectionId": "f369821a-4623-d8d5-7cd1-03759c9d3a69",
-			"responses": []
-		},
-		{
-			"id": "38ed5b1d-241f-1863-967a-0b21f794dca7",
-			"headers": "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImVubmlvQGciLCJpZCI6IjU2N2QzZGRhOGY3NjY2M2UxYzYwM2M4ZSIsImlhdCI6MTQ2MTUyMTE2NiwiZXhwIjoxNDYxNjA3NTY2fQ.0Q7KxD1h5nK4_J5OxPTyNiM-naoIDKIcSu2jZ4kZnfA\n",
-			"url": "localhost:3232/api/files",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "POST",
-			"data": [
-				{
-					"key": "fileId",
-					"value": "56f2dd514824b4021066c0c2",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "newName",
-					"value": "New Name goes here23",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"dataMode": "urlencoded",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1461521835164,
-			"name": "Files - Rename file",
-			"description": "",
-			"collectionId": "f369821a-4623-d8d5-7cd1-03759c9d3a69",
-			"responses": []
-		},
-		{
-			"id": "52745ac2-220b-bbb2-5bd9-00e1fff36ca7",
-			"headers": "",
-			"url": "localhost:3232/api/users",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "POST",
-			"data": [
-				{
-					"key": "username",
-					"value": "ennio@g",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "password",
-					"value": "ennio",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"dataMode": "urlencoded",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1461520723103,
 			"name": "User signup",
-			"description": "",
-			"collectionId": "f369821a-4623-d8d5-7cd1-03759c9d3a69",
-			"responses": []
-		},
-		{
-			"id": "bd1fe6c8-0df7-c9a0-6697-965a52e565c3",
-			"headers": "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImVubmlvQGciLCJpZCI6IjU2N2QzZGRhOGY3NjY2M2UxYzYwM2M4ZSIsImlhdCI6MTQ2MTUyMTE2NiwiZXhwIjoxNDYxNjA3NTY2fQ.0Q7KxD1h5nK4_J5OxPTyNiM-naoIDKIcSu2jZ4kZnfA\n",
-			"url": "localhost:3232/api/files",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "PUT",
-			"data": [
-				{
-					"key": "uploadFiles",
-					"value": {
-						"0": {}
-					},
-					"type": "file",
-					"enabled": true
+			"request": {
+				"url": "{{url}}/api/users",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "ennio@g",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "ennio",
+							"type": "text",
+							"enabled": true
+						}
+					]
 				},
-				{
-					"key": "uploadFiles",
-					"value": null,
-					"type": "file",
-					"enabled": true
-				}
-			],
-			"dataMode": "params",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1461521971757,
-			"name": "Files - Add file(s)",
-			"description": "",
-			"collectionId": "f369821a-4623-d8d5-7cd1-03759c9d3a69",
-			"responses": []
+				"description": ""
+			},
+			"response": []
 		},
 		{
-			"id": "d855e1cd-f531-a18c-359c-46474e7846ea",
-			"headers": "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImVubmlvQGciLCJpZCI6IjU2N2QzZGRhOGY3NjY2M2UxYzYwM2M4ZSIsImlhdCI6MTQ1ODc1NzQ5NywiZXhwIjoxNDU4ODQzODk3fQ.9W2_vtJKwWMExvCvIMqX8xxOVJsIJrQ5NXRBjCWF_pY\n",
-			"url": "localhost:3232/api/users/filelist",
-			"preRequestScript": null,
-			"pathVariables": {},
-			"method": "GET",
-			"data": null,
-			"dataMode": "params",
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1458757704342,
-			"name": "File - Get filelist",
-			"description": "",
-			"collectionId": "f369821a-4623-d8d5-7cd1-03759c9d3a69",
-			"responses": []
-		},
-		{
-			"id": "d8e503ae-6470-c923-1aab-6ed084b6e8b0",
-			"headers": "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImVubmlvQGciLCJpZCI6IjU2N2QzZGRhOGY3NjY2M2UxYzYwM2M4ZSIsImlhdCI6MTQ2MTUyMTE2NiwiZXhwIjoxNDYxNjA3NTY2fQ.0Q7KxD1h5nK4_J5OxPTyNiM-naoIDKIcSu2jZ4kZnfA\n",
-			"url": "localhost:3232/api/users",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "GET",
-			"data": [
-				{
-					"key": "username",
-					"value": "ennio@g",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "password",
-					"value": "ennio",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"dataMode": "urlencoded",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1461521199131,
 			"name": "User - Login",
-			"description": "",
-			"collectionId": "f369821a-4623-d8d5-7cd1-03759c9d3a69",
-			"responses": []
-		},
-		{
-			"id": "e4ea7a65-7460-62ec-296c-6f9f7bb75157",
-			"headers": "",
-			"url": "localhost:3232/api/users",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "POST",
-			"data": [
-				{
-					"key": "username",
-					"value": "ennio@g",
-					"type": "text",
-					"enabled": true
+			"request": {
+				"url": "{{url}}/api/users",
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImVubmlvQGciLCJpZCI6IjU2N2QzZGRhOGY3NjY2M2UxYzYwM2M4ZSIsImlhdCI6MTQ2MTUyMTE2NiwiZXhwIjoxNDYxNjA3NTY2fQ.0Q7KxD1h5nK4_J5OxPTyNiM-naoIDKIcSu2jZ4kZnfA",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "ennio@g",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "ennio",
+							"type": "text",
+							"enabled": true
+						}
+					]
 				},
-				{
-					"key": "password",
-					"value": "ennio",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"dataMode": "urlencoded",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1451048303964,
-			"name": "Member signup",
-			"description": "",
-			"collectionId": "f369821a-4623-d8d5-7cd1-03759c9d3a69",
-			"responses": []
+				"description": ""
+			},
+			"response": []
 		},
 		{
-			"id": "fb9d405c-14c1-c2a3-39bf-3f9e99c78f02",
-			"headers": "x-access-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImVubmlvQGciLCJpZCI6IjU2N2QzZGRhOGY3NjY2M2UxYzYwM2M4ZSIsImlhdCI6MTQ2MTUyMTE2NiwiZXhwIjoxNDYxNjA3NTY2fQ.0Q7KxD1h5nK4_J5OxPTyNiM-naoIDKIcSu2jZ4kZnfA\n",
-			"url": "localhost:3232/api/files",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "DELETE",
-			"data": [
-				{
-					"key": "fileID",
-					"value": "571d0e3564148fc5190beb03",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"dataMode": "urlencoded",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1461522091923,
+			"name": "Member signup",
+			"request": {
+				"url": "{{url}}/api/users",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "ennio@g",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "ennio",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Authentication - Request token",
+			"request": {
+				"url": "{{url}}/api/authenticate",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "ennio@g",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "ennio",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Files - Add file(s)",
+			"request": {
+				"url": "{{url}}/api/files",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImVubmlvQGciLCJpZCI6IjU2N2QzZGRhOGY3NjY2M2UxYzYwM2M4ZSIsImlhdCI6MTQ2MTUyMTE2NiwiZXhwIjoxNDYxNjA3NTY2fQ.0Q7KxD1h5nK4_J5OxPTyNiM-naoIDKIcSu2jZ4kZnfA",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "uploadFiles",
+							"type": "file",
+							"enabled": true
+						},
+						{
+							"key": "uploadFiles",
+							"value": "",
+							"type": "file",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Files - Get file",
+			"request": {
+				"url": "{{url}}/api/files?fileId=56f2dd514824b4021066c0c2",
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImVubmlvQGciLCJpZCI6IjU2N2QzZGRhOGY3NjY2M2UxYzYwM2M4ZSIsImlhdCI6MTQ2MTUyMTE2NiwiZXhwIjoxNDYxNjA3NTY2fQ.0Q7KxD1h5nK4_J5OxPTyNiM-naoIDKIcSu2jZ4kZnfA",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": "Gets the file based on user_id and file_id"
+			},
+			"response": []
+		},
+		{
+			"name": "Files - Rename file",
+			"request": {
+				"url": "{{url}}/api/files",
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImVubmlvQGciLCJpZCI6IjU2N2QzZGRhOGY3NjY2M2UxYzYwM2M4ZSIsImlhdCI6MTQ2MTUyMTE2NiwiZXhwIjoxNDYxNjA3NTY2fQ.0Q7KxD1h5nK4_J5OxPTyNiM-naoIDKIcSu2jZ4kZnfA",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "fileId",
+							"value": "56f2dd514824b4021066c0c2",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "newName",
+							"value": "New Name goes here23",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "File - Delete file",
-			"description": "",
-			"collectionId": "f369821a-4623-d8d5-7cd1-03759c9d3a69",
-			"responses": []
+			"request": {
+				"url": "{{url}}/api/files",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImVubmlvQGciLCJpZCI6IjU2N2QzZGRhOGY3NjY2M2UxYzYwM2M4ZSIsImlhdCI6MTQ2MTUyMTE2NiwiZXhwIjoxNDYxNjA3NTY2fQ.0Q7KxD1h5nK4_J5OxPTyNiM-naoIDKIcSu2jZ4kZnfA",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "fileID",
+							"value": "571d0e3564148fc5190beb03",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "File - Get filelist",
+			"request": {
+				"url": "{{url}}/api/users/filelist",
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImVubmlvQGciLCJpZCI6IjU2N2QzZGRhOGY3NjY2M2UxYzYwM2M4ZSIsImlhdCI6MTQ1ODc1NzQ5NywiZXhwIjoxNDU4ODQzODk3fQ.9W2_vtJKwWMExvCvIMqX8xxOVJsIJrQ5NXRBjCWF_pY",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

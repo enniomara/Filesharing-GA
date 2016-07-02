@@ -1,0 +1,13 @@
+FROM mongo:3.3
+
+# Set homedir of the app
+ENV HOMEDIR=/home/app
+
+RUN mkdir -p $HOMEDIR/filesharing
+WORKDIR $HOMEDIR/filesharing
+
+# Copy the database dump files so that we can import it to the database
+COPY ./dump $HOMEDIR/filesharing/dump
+
+# Restore the database from the dump
+RUN (mongod &) && sleep 15 && mongorestore && mongod --shutdown

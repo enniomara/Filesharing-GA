@@ -9,5 +9,5 @@ To run this project you need docker and docker-compose. The server is separated 
 To start the containers run the following in project root(where Dockerfile is located)
 
 ```
-$ docker-compose up -b
+$ docker-compose up --build
 ```

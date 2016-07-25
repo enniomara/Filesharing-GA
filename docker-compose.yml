@@ -4,7 +4,9 @@ services:
     # Ensure the database is running before running server
     depends_on:
       - db
-    build: .
+    build:
+      context: .
+      dockerfile: ./dockerConfig/Dockerfile
     container_name: AppJS
     #command: npm runServer
     links:
@@ -23,7 +25,15 @@ services:
   db:
     build:
       context: .
-      dockerfile: Dockerfile-mongo
+      dockerfile: ./dockerConfig/Dockerfile-mongo
     container_name: AppDB
     ports:
      - "27017:27017"
+
+  # This adds the premade database to 'db' container
+  mongo-seed:
+    build:
+      context: .
+      dockerfile: ./dockerConfig/Dockerfile-mongo-seed
+    links:
+      - db

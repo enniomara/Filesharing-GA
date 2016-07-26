@@ -14,8 +14,6 @@ services:
     ports:
      - "3232:3232" # JS
      - "5858:5858" # Node Debug
-     - "35729:35729" # Livereload
-     - "8080:8080" # change to whatever port is to be used
     environment:
      - NODE_ENV=development # production for staging
     volumes:

@@ -21,7 +21,7 @@ exports.authenticate = function(jsonObject, callback){
         success: false,
         message: 'Authentication failed. User not found.'
       };
-      callback(null, response);
+      callback(true, response);
     }
     else if (user) {
 
@@ -36,7 +36,7 @@ exports.authenticate = function(jsonObject, callback){
         }
         // Password did not match
         if (!isMatch) {
-          callback(null, {
+          callback(true, {
             success: false,
             message: 'Authentication failed. Wrong password.'
           });

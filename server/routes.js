@@ -80,6 +80,7 @@ module.exports = function(app, router){
     },
     function(error, data){
       if(error){
+        res.status(401);
         if(data){
           res.json(data);
           return;

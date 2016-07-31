@@ -26,11 +26,12 @@ module.exports = function(app, router){
         function(error, data){
           // TODO - add user information already there
           if(error){
-            res.status(500);
-            res.end();
-              success: false,
-              message: data.message
-            });
+            res.send(
+              {
+                success: false,
+                message: data.message
+              }
+            );
           }
           // TODO - handle the else case
           else{
@@ -220,6 +221,7 @@ module.exports = function(app, router){
 
         jwtAuthController.isAuthenticated(token, function(err, data) {
           if (err) {
+
             res.json(data);
           } else if (err && data.message == 'No token provided') {
             res.status(403).send(data);
@@ -263,10 +265,16 @@ module.exports = function(app, router){
 
       jwtAuthController.isAuthenticated(token, function(err, data) {
         if (err) {
+          // Unauthorized access(bad token)
+          res.status(401)
+          if(data.message  == 'No token provided.'){
+            // Bad request due to no token provided
+            res.status(400);
+          }
+
           res.json(data);
-        } else if (err && data.message == 'No token provided') {
-          res.status(403).send(data);
-        } else {
+        }
+        else {
           req.decoded = data;
           next();
         }

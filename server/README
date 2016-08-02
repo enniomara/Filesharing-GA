@@ -23,10 +23,6 @@ Authentication Part
 
 File part
   path: /api/files
-    HTTP verb: GET
-    Params: token, x-access-token(used as header), fileId
-    Description: This endpoint downloads a file specified by the fileId parameter. The token can be entered as a parameter or as a header.
-
     HTTP verb: POST
     Params: token, x-access-token(used as header), fileId, newName
     Description: This endpoint renames the file specified by the `fileId`. The POST request takes the `fileId` for the file and the new name of the file as `newName`. The token can be entered as a parameter or as a header.
@@ -38,3 +34,8 @@ File part
     HTTP verb: DELETE
     Params: token, x-access-token(used as header), fileId
     Description: This endpoint deletes a file from the server. The file to be deleted is marked by it's id, send as `fileId`. The token can be entered as a parameter or as a header.
+
+path: /api/files/downloadFile
+  HTTP verb: POST
+  Params: token, x-access-token(used as header), fileId
+  Description: This endpoint downloads a file specified by the fileId parameter. The token should be entered as part of request body. 

@@ -5,6 +5,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
+    "debug": "nodemon --debug=56745 ./server/server.js",
     "test": "./node_modules/.bin/mocha --reporter spec server/test"
   },
   "dependencies": {

@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   app:
     # Ensure the database is running before running server
@@ -13,12 +13,13 @@ services:
      - db
     ports:
      - "3232:3232" # JS
-     - "5858:5858" # Node Debug
+     - "56745:56745" # Node Debug
     environment:
      - NODE_ENV=development # production for staging
     volumes:
      - ./:/home/app/filesharing
      - /home/app/filesharing/node_modules/
+    entrypoint: ["npm", "run", "debug"]
 
   db:
     build:

@@ -22,9 +22,6 @@ RUN npm install
 # Port 3000 for MEAN.JS server
 #EXPOSE 3232:3232
 
-# Port 5858 for node debug
-#EXPOSE 5858:5858
-
 # Port 35729 for livereload
 #EXPOSE 35729:35729
 
@@ -32,4 +29,3 @@ RUN npm install
 #RUN ls
 
 ENV NODE_ENV development # production for staging
-CMD [ "nodemon", "-L", "server/server.js"]
